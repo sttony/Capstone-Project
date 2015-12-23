@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         mMAdapter = new MainActivitySectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.mainpager);
         mViewPager.setAdapter(mMAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
 
 //        final ActionBar actionBar = getActionBar();
 //        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -93,15 +99,16 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     // The first section of the app is the most interesting -- it offers
                     // a launchpad into the other demonstrations in this example application.
-                    return new TasksFragment();
+                    TasksFragment fragment = TasksFragment.newInstance("test1", "test2");
+                    return fragment;
 
                 default:
                     // The other sections of the app are dummy placeholders.
-                    Fragment fragment = new GoalsFragment();
+                    GoalsFragment fragmentx = GoalsFragment.newInstance("test1", "test2");
 //                    Bundle args = new Bundle();
 //                    args.putInt(GoalsFragment.ARG_SECTION_NUMBER, i + 1);
 //                    fragment.setArguments(args);
-                    return fragment;
+                    return fragmentx;
             }
         }
 
