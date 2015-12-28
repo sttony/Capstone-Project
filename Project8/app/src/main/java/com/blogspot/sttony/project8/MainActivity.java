@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import junit.framework.Assert;
+
 public class MainActivity extends AppCompatActivity {
 
     ViewPager mViewPager;
@@ -29,7 +31,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // View pager
-        mMAdapter = new MainActivitySectionsPagerAdapter(getSupportFragmentManager());
+        String[] titles = {
+                getResources().getString(R.string.TodayTasks),
+                getResources().getString(R.string.WeekTasks),
+                getResources().getString(R.string.Goals)
+        };
+
+        mMAdapter = new MainActivitySectionsPagerAdapter(getSupportFragmentManager(),titles);
         mViewPager = (ViewPager) findViewById(R.id.mainpager);
         mViewPager.setAdapter(mMAdapter);
 
@@ -89,9 +97,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static class MainActivitySectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public MainActivitySectionsPagerAdapter(FragmentManager fm) {
+        public MainActivitySectionsPagerAdapter(FragmentManager fm, String[] _titles) {
             super(fm);
+            Assert.assertTrue(_titles.length == 3);
+            mTitles = _titles;
         }
+
+        private String[] mTitles = null;
 
         @Override
         public Fragment getItem(int i) {
@@ -117,9 +129,9 @@ public class MainActivity extends AppCompatActivity {
             return 3;
         }
 
-        @Override
         public CharSequence getPageTitle(int position) {
-            return "Section " + (position + 1);
+            Assert.assertTrue(position>=0 && position<=3);
+            return mTitles[position];
         }
     }
 }
