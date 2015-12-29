@@ -8,4 +8,6 @@
     <string name="WeekTasks">Week</string>
     <string name="Goals">Goals</string>
 
+    <string name="content_authority">com.blogspot.sttony.project8.app</string>
+
 </resources>
