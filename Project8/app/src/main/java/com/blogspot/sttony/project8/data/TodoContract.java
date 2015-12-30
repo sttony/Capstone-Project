@@ -12,9 +12,7 @@ public class TodoContract {
     public static final String CONTENT_AUTHORITY = "com.blogspot.sttony.project8.app";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_TASK = "task";
-    public static final String PATH_TASKS = "tasks";
     public static final String PATH_GOAL = "goal";
-    public static final String PATH_GOALS = "goals";
 
 
     public static final class TaskEntry implements BaseColumns {
@@ -49,9 +47,7 @@ public class TodoContract {
 
         public static Uri buildTaskWithGoal(long goal_id)
         {
-            return CONTENT_URI.buildUpon().
-                    appendQueryParameter(COLUMN_GOAL_ID, Long.toString(goal_id))
-                    .build();
+            return ContentUris.withAppendedId(CONTENT_URI.buildUpon().appendPath(PATH_GOAL).build(), goal_id);
         }
 
         public static Uri buildTaskUri(long task_id)

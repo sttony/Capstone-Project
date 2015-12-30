@@ -8,10 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
-/**
- * Created by sttony on 12/28/2015.
- */
+
 public class TodoProvider extends ContentProvider {
 
     private TodoDBHelper mOpenHelper;
@@ -32,14 +31,17 @@ public class TodoProvider extends ContentProvider {
 
         // content://[Project8]/task/123
         matcher.addURI(authority, TodoContract.PATH_TASK + "/#", TASK);
-        // content://[Project8]/task/goal/123
-        matcher.addURI(authority, TodoContract.PATH_TASKS + "/" + TodoContract.PATH_GOAL  + "/#", TASKS_WITH_GOAL);
-        // content://[Project8]/tasks/123,456
-        matcher.addURI(authority, TodoContract.PATH_TASKS + "/#,#", TASKS_WITH_DATE_RANGE);
         // content://[Project8]/goal/123
         matcher.addURI(authority, TodoContract.PATH_GOAL + "/#", GOAL);
-        // content://[Project8]/goals
-        matcher.addURI(authority, TodoContract.PATH_GOALS, GOALS);
+        // content://[Project8]/goal
+        matcher.addURI(authority, TodoContract.PATH_GOAL, GOALS);
+
+        // content://[Project8]/task/goal/123
+        matcher.addURI(authority, TodoContract.PATH_TASK + "/" +
+                TodoContract.PATH_GOAL  + "/#", TASKS_WITH_GOAL);
+        // content://[Project8]/tasks?start_date=123&end_date=456
+        matcher.addURI(authority, TodoContract.PATH_TASK, TASKS_WITH_DATE_RANGE);
+
         return matcher;
     }
 
@@ -58,6 +60,7 @@ public class TodoProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(Uri uri) {
+        Log.d("STTONY", uri.toString());
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
