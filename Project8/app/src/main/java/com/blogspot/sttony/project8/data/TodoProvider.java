@@ -22,7 +22,20 @@ public class TodoProvider extends ContentProvider {
     static final int TASKS_WITH_DATE_RANGE = 102;
 
 
-    //private static final SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
+    private static final SQLiteQueryBuilder sTaskQueryBuilder;
+    static{
+        sTaskQueryBuilder = new SQLiteQueryBuilder();
+        sTaskQueryBuilder.setTables(TodoContract.TaskEntry.TABLE_NAME);
+    }
+
+    private static final String sTaskByGoalSelection =
+            TodoContract.TaskEntry.TABLE_NAME +
+                    "." + TodoContract.TaskEntry.COLUMN_GOAL_ID + " = ? ";
+
+    private static final String sTaskByDateRangeSelection =
+            TodoContract.TaskEntry.TABLE_NAME +
+                    "." + TodoContract.TaskEntry.COLUMN_DUE_DATE + " >= ? AND " +
+                    TodoContract.TaskEntry.COLUMN_DUE_DATE + " <= ? ";
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     static UriMatcher buildUriMatcher() {
@@ -51,10 +64,81 @@ public class TodoProvider extends ContentProvider {
         return true;
     }
 
+    private Cursor getTaskByGoal(Uri uri, String[] projection, String sortOrder) {
+        int _id = TodoContract.TaskEntry.getGoalIdFromUri(uri);
+
+        return sTaskQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sTaskByGoalSelection,
+                new String[]{Integer.toString(_id)},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    private Cursor getTaskByDateRange(Uri uri, String[] projection, String sortOrder) {
+        int _start_date = TodoContract.TaskEntry.getStartDateFromUri(uri);
+        int _end_date = TodoContract.TaskEntry.getEndDateFromUri(uri);
+
+        return sTaskQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sTaskByDateRangeSelection,
+                new String[]{Integer.toString(_start_date), Integer.toString(_end_date)},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+        Cursor retCursor = null;
+        switch (sUriMatcher.match(uri)) {
+            case TASK:
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        TodoContract.TaskEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
+            case GOAL:
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        TodoContract.GoalEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+
+            case GOALS:
+                // get all goals
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        TodoContract.GoalEntry.TABLE_NAME,
+                        projection,
+                        null,
+                        null,
+                        null,
+                        null,
+                        sortOrder);
+                break;
+            case TASKS_WITH_GOAL:
+                retCursor = getTaskByGoal(uri,projection, sortOrder);
+                break;
+            case TASKS_WITH_DATE_RANGE:
+                retCursor =getTaskByDateRange(uri, projection, sortOrder);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return retCursor;
     }
 
     @Nullable

@@ -54,6 +54,21 @@ public class TodoContract {
         {
             return ContentUris.withAppendedId(CONTENT_URI, task_id);
         }
+
+        public static int getGoalIdFromUri(Uri uri)
+        {
+            return  Integer.getInteger(uri.getPathSegments().get(3));
+        }
+
+        public static int getStartDateFromUri(Uri uri)
+        {
+            return  Integer.getInteger(uri.getQueryParameter(QUERY_START_DATE));
+        }
+
+        public static int getEndDateFromUri(Uri uri)
+        {
+            return  Integer.getInteger(uri.getQueryParameter(QUERY_END_DATE));
+        }
     }
 
     public static final class GoalEntry implements BaseColumns {
