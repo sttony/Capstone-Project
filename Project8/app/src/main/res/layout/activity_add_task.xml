@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.blogspot.sttony.project8.AddTaskActivity">
+    tools:context="com.blogspot.sttony.project8.TaskActivity">
 
     <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -18,7 +18,7 @@
         android:columnCount="4"
         android:orientation="horizontal"
         android:rowCount="5"
-        tools:context="com.blogspot.sttony.project8.AddTaskActivity">
+        tools:context="com.blogspot.sttony.project8.TaskActivity">
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,7 +47,8 @@
             android:layout_columnSpan="3"
             android:layout_row="1"
             android:hint="@string/view_field_Title"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:id="@+id/view_field_task_title" />
         <!-- due date -->
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +59,7 @@
             android:textSize="@dimen/abc_text_size_title_material" />
 
         <EditText
-            android:id="@+id/view_due_date"
+            android:id="@+id/view_task_due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="fill_horizontal"
@@ -81,7 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:layout_row="3"
-            android:hint="Priority" />
+            android:inputType="number"
+            android:hint="Priority"
+            android:id="@+id/view_field_task_priority" />
         <!-- reminder -->
         <CheckBox
             android:layout_width="wrap_content"
@@ -89,7 +92,8 @@
             android:layout_column="2"
             android:layout_row="3"
             android:textSize="@dimen/abc_text_size_title_material"
-            android:hint="Reminder" />
+            android:hint="Reminder"
+            android:id="@+id/view_field_task_is_reminder" />
 
         <!-- comment -->
 
@@ -132,6 +136,7 @@
             android:layout_column="2"
             android:layout_columnSpan="2"
             android:layout_row="5"
-            android:text="Save" />
+            android:text="Save"
+            android:onClick="saveTask"/>
     </LinearLayout>
 </RelativeLayout>

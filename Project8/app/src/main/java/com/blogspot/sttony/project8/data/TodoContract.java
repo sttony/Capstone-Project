@@ -12,7 +12,9 @@ public class TodoContract {
     public static final String CONTENT_AUTHORITY = "com.blogspot.sttony.project8.app";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_TASK = "task";
+    public static final String PATH_TASKS = "tasks";
     public static final String PATH_GOAL = "goal";
+    public static final String PATH_GOALS = "goals";
 
 
     public static final class TaskEntry implements BaseColumns {
@@ -32,6 +34,9 @@ public class TodoContract {
         public static final String COLUMN_DUE_DATE = "due_date";
         public static final String COLUMN_QUANTITY = "quatity";
         public static final String COLUMN_GOAL_ID = "goal_id";
+        public static final String COLUMN_COMMENT = "comment";
+        public static final String COLUMN_IS_REMINDER = "is_reminder";
+        public static final String COLUMN_PRIORITY = "priority";
 
         public static final String QUERY_START_DATE = "start_date";
         public static final String QUERY_END_DATE = "end_date";

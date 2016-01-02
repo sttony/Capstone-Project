@@ -43,17 +43,20 @@ public class TodoProvider extends ContentProvider {
         final String authority = TodoContract.CONTENT_AUTHORITY;
 
         // content://[Project8]/task/123
+        matcher.addURI(authority, TodoContract.PATH_TASK, TASK);
         matcher.addURI(authority, TodoContract.PATH_TASK + "/#", TASK);
+
         // content://[Project8]/goal/123
+        matcher.addURI(authority, TodoContract.PATH_GOAL, GOAL);
         matcher.addURI(authority, TodoContract.PATH_GOAL + "/#", GOAL);
         // content://[Project8]/goal
-        matcher.addURI(authority, TodoContract.PATH_GOAL, GOALS);
+        matcher.addURI(authority, TodoContract.PATH_GOALS, GOALS);
 
-        // content://[Project8]/task/goal/123
-        matcher.addURI(authority, TodoContract.PATH_TASK + "/" +
+        // content://[Project8]/tasks/goal/123
+        matcher.addURI(authority, TodoContract.PATH_TASKS + "/" +
                 TodoContract.PATH_GOAL  + "/#", TASKS_WITH_GOAL);
         // content://[Project8]/tasks?start_date=123&end_date=456
-        matcher.addURI(authority, TodoContract.PATH_TASK, TASKS_WITH_DATE_RANGE);
+        matcher.addURI(authority, TodoContract.PATH_TASKS + "/*", TASKS_WITH_DATE_RANGE);
 
         return matcher;
     }

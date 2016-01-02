@@ -36,8 +36,11 @@ public class TodoDBHelper extends SQLiteOpenHelper {
                 TaskEntry.COLUMN_GOAL_ID + " INTEGER NOT NULL, " +
                 TaskEntry.COLUMN_DUE_DATE + " INTEGER NOT NULL, " +
                 TaskEntry.COLUMN_IS_COMPLETE + " INTEGER NOT NULL, " +
+                TaskEntry.COLUMN_IS_REMINDER + " INTEGER NOT NULL, " +
                 TaskEntry.COLUMN_QUANTITY + " REAL NOT NULL," +
                 TaskEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                TaskEntry.COLUMN_COMMENT + " TEXT NOT NULL, " +
+                TaskEntry.COLUMN_PRIORITY + " INTEGER NOT NULL, " +
 
                 // Set up the location column as a foreign key to location table.
                 " FOREIGN KEY (" + TaskEntry.COLUMN_GOAL_ID + ") REFERENCES " +
