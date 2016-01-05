@@ -1,12 +1,19 @@
 package com.blogspot.sttony.project8;
 
-import android.app.Activity;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.blogspot.sttony.project8.data.TodoContract;
 
 
 /**
@@ -17,17 +24,23 @@ import android.view.ViewGroup;
  * Use the {@link TasksFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TasksFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class TasksFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+    private static final String START_DATE = "param1";
+    private static final String GOAL_ID = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private RecyclerView mRecyclerView;
+    private TasksAdapter mTasksAdapter;
+
+    static final int COL_TASK_ID = 0;
+
+    static final int COL_TASK_DUE_DATE = 2;
+    static final int COL_TASK_IS_COMPLETE = 3;
+    static final int COL_TASK_TITLE = 6;
 
     /**
      * Use this factory method to create a new instance of
@@ -41,8 +54,8 @@ public class TasksFragment extends Fragment {
     public static TasksFragment newInstance(String param1, String param2) {
         TasksFragment fragment = new TasksFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(START_DATE, param1);
+        args.putString(GOAL_ID, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,8 +68,8 @@ public class TasksFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getString(START_DATE);
+            mParam2 = getArguments().getString(GOAL_ID);
         }
     }
 
@@ -64,7 +77,15 @@ public class TasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tasks, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_tasks, container, false);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.view_recycler_task);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setHasFixedSize(true);
+
+        mTasksAdapter = new TasksAdapter();
+        mRecyclerView.setAdapter(mTasksAdapter);
+        getLoaderManager().initLoader(0, null, this);
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -91,6 +112,26 @@ public class TasksFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(),
+                TodoContract.TaskEntry.buildTaskWithRange(0,Integer.MAX_VALUE),
+                null,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mTasksAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -105,5 +146,7 @@ public class TasksFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+
 
 }
