@@ -1,5 +1,6 @@
 package com.blogspot.sttony.project8;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -78,7 +79,16 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
 
-        mTasksAdapter = new TasksAdapter();
+        mTasksAdapter = new TasksAdapter(new TasksAdapter.TodoAdapterOnClickHandler() {
+            @Override
+            public void onClick(Long id, TasksAdapter.TasksAdapterViewHolder vh) {
+                Bundle args = new Bundle();
+                args.putLong(TaskActivity.TASK_ID, id);
+                Intent intent = new Intent(TasksFragment.this.getContext(), TaskActivity.class)
+                        .putExtras(args);
+                startActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(mTasksAdapter);
         if(savedInstanceState != null) {
             getLoaderManager().initLoader(0, savedInstanceState, this);

@@ -2,6 +2,7 @@ package com.blogspot.sttony.project8;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,10 +24,12 @@ import java.util.Locale;
 
 public class TaskActivity extends AppCompatActivity {
 
+    public static  final String TASK_ID = "task_id";
+
     private DatePickerDialog mDueDataPicker;
     private SimpleDateFormat dateFormatter= new SimpleDateFormat("MM-dd-yyyy", Locale.US);
 
-    private int mId = -1; // -1 means new
+    private long mId = -1; // -1 means new
     private EditText mViewTitle = null;
     private EditText mViewDueDate = null;
     private EditText mViewPriority = null;
@@ -37,9 +40,19 @@ public class TaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        if(savedInstanceState != null && savedInstanceState.containsKey(TaskActivity.TASK_ID))
+        {
+            mId = savedInstanceState.getLong(TASK_ID);
+        }
+        Intent intent = getIntent();
+        if(intent != null && intent.getExtras()!=null && intent.getExtras().containsKey(TASK_ID))
+        {
+            mId = intent.getExtras().getLong(TASK_ID);
+        }
 
         setViewById();
         setDueDateDialog();
+
     }
 
     private void setViewById() {

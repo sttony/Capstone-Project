@@ -116,13 +116,13 @@ public class MainActivity extends AppCompatActivity {
                     return fragment;
                 }
 
-                default:
-                    // The other sections of the app are dummy placeholders.
+                case 3:{
                     GoalsFragment fragmentx = GoalsFragment.newInstance("test1", "test2");
-//                    Bundle args = new Bundle();
-//                    args.putInt(GoalsFragment.ARG_SECTION_NUMBER, i + 1);
-//                    fragment.setArguments(args);
                     return fragmentx;
+                }
+
+                default:
+                    throw new UnsupportedOperationException();
             }
         }
 

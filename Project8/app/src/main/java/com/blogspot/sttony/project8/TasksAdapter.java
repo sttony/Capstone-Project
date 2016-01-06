@@ -20,6 +20,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
     private Cursor mCursor;
 
+    public TasksAdapter(TodoAdapterOnClickHandler vh) {
+        super();
+        mClickHandler = vh;
+    }
+
+    final private TodoAdapterOnClickHandler mClickHandler;
+
     @Override
     public TasksAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if ( parent instanceof RecyclerView ) {
@@ -43,6 +50,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
         holder.mTitleView.setText(title);
         String duedateStr = simpleDateFormat.format(new Date(duedate));
         holder.mDueDateView.setText(duedateStr);
+
+        if( isCompleted ==1)
+        {
+            holder.mIsCompletedView.setClickable(false);
+
+        }
     }
 
     @Override
@@ -55,6 +68,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
         mCursor = newCursor;
         notifyDataSetChanged();
         //mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
+
+    public static interface TodoAdapterOnClickHandler {
+        void onClick(Long id, TasksAdapterViewHolder vh);
     }
 
     public class TasksAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -71,9 +88,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
             itemView.setOnClickListener(this);
         }
 
+
+
         @Override
         public void onClick(View v) {
-
+            int adapterPosition = getAdapterPosition();
+            mCursor.moveToPosition(adapterPosition);
+            mClickHandler.onClick(mCursor.getLong(TasksFragment.COL_TASK_ID), this);
         }
     }
 }
