@@ -57,8 +57,8 @@ public class TestProvider extends AndroidTestCase {
         assertEquals("Error: the // content://[Project8]/task/goal/123 should return TaskEntry.CONTENT_TYPE",
                 TodoContract.TaskEntry.CONTENT_TYPE, type);
 
-        // content://[Project8]/task?start_date=123&end_date=456
-        type = mContext.getContentResolver().getType(TodoContract.TaskEntry.buildTaskWithRange(123, 456));
+        // content://[Project8]/task?end_date=456
+        type = mContext.getContentResolver().getType(TodoContract.TaskEntry.buildTaskWithRange(123));
         assertEquals("Error:  // content://[Project8]/tasks?start_date=123&end_date=456 should return TaskEntry.CONTENT_TYPE",
                 TodoContract.TaskEntry.CONTENT_TYPE, type);
 

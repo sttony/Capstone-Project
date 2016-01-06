@@ -16,6 +16,9 @@ import android.view.MenuItem;
 
 import junit.framework.Assert;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     ViewPager mViewPager;
@@ -86,11 +89,32 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int i) {
             switch (i) {
-                case 0:
-                    // The first section of the app is the most interesting -- it offers
-                    // a launchpad into the other demonstrations in this example application.
-                    TasksFragment fragment = TasksFragment.newInstance("test1", "test2");
+                case 0: {
+                    // Today
+                    Calendar c = Calendar.getInstance();
+                    c.set(c.get(Calendar.YEAR),
+                            c.get(Calendar.MONTH),
+                            c.get(Calendar.DAY_OF_MONTH),
+                            11,
+                            59,
+                            59
+                    );
+                    TasksFragment fragment = TasksFragment.newInstance(c.getTime().getTime(), -1);
                     return fragment;
+                }
+                case 1: {
+                    // week
+                    Calendar c = Calendar.getInstance();
+                    c.set(c.get(Calendar.YEAR),
+                            c.get(Calendar.MONTH),
+                            c.get(Calendar.DAY_OF_MONTH) + 7 - c.get(Calendar.DAY_OF_WEEK),
+                            11,
+                            59,
+                            59
+                    );
+                    TasksFragment fragment = TasksFragment.newInstance(c.getTime().getTime(), -1);
+                    return fragment;
+                }
 
                 default:
                     // The other sections of the app are dummy placeholders.

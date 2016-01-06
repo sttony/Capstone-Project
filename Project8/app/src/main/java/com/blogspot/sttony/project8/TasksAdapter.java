@@ -12,7 +12,12 @@ import android.widget.TextView;
 
 import com.blogspot.sttony.project8.data.TodoContract;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapterViewHolder> {
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
     private Cursor mCursor;
 
     @Override
@@ -33,11 +38,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
         mCursor.moveToPosition(position);
         int isCompleted = mCursor.getInt(TasksFragment.COL_TASK_IS_COMPLETE);
         String title = mCursor.getString(TasksFragment.COL_TASK_TITLE);
-        int duedate = mCursor.getInt(TasksFragment.COL_TASK_DUE_DATE);
+        long duedate = mCursor.getLong(TasksFragment.COL_TASK_DUE_DATE);
         holder.mIsCompletedView.setChecked(isCompleted==1);
         holder.mTitleView.setText(title);
-        holder.mDueDateView.setText(Integer.toString(duedate));
-
+        String duedateStr = simpleDateFormat.format(new Date(duedate));
+        holder.mDueDateView.setText(duedateStr);
     }
 
     @Override

@@ -25,37 +25,26 @@ import com.blogspot.sttony.project8.data.TodoContract;
  * create an instance of this fragment.
  */
 public class TasksFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
-    private static final String START_DATE = "param1";
-    private static final String GOAL_ID = "param2";
+    private static final String DEAD_LINE_DATE = "dead_line_date";
+    private static final String GOAL_ID = "goal_id";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private long mDeadlineDate;
+    private long mGoalId;
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private TasksAdapter mTasksAdapter;
 
     static final int COL_TASK_ID = 0;
-
     static final int COL_TASK_DUE_DATE = 2;
     static final int COL_TASK_IS_COMPLETE = 3;
     static final int COL_TASK_TITLE = 6;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TasksFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TasksFragment newInstance(String param1, String param2) {
+    public static TasksFragment newInstance(long param1, long param2) {
         TasksFragment fragment = new TasksFragment();
         Bundle args = new Bundle();
-        args.putString(START_DATE, param1);
-        args.putString(GOAL_ID, param2);
+        args.putLong(DEAD_LINE_DATE, param1);
+        args.putLong(GOAL_ID, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,9 +57,16 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(START_DATE);
-            mParam2 = getArguments().getString(GOAL_ID);
+            mDeadlineDate = getArguments().getLong(DEAD_LINE_DATE);
+            mGoalId = getArguments().getLong(GOAL_ID);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putLong(DEAD_LINE_DATE, mDeadlineDate);
+        outState.putLong(GOAL_ID, mGoalId);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -84,11 +80,22 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
 
         mTasksAdapter = new TasksAdapter();
         mRecyclerView.setAdapter(mTasksAdapter);
-        getLoaderManager().initLoader(0, null, this);
+        if(savedInstanceState != null) {
+            getLoaderManager().initLoader(0, savedInstanceState, this);
+        }
+        else
+        {
+            Bundle args = new Bundle();
+            args.putLong(DEAD_LINE_DATE, mDeadlineDate);
+            if( mGoalId != -1)
+            {
+                args.putLong(GOAL_ID, mGoalId);
+            }
+            getLoaderManager().initLoader(0, args, this);
+        }
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -114,12 +121,38 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(),
-                TodoContract.TaskEntry.buildTaskWithRange(0,Integer.MAX_VALUE),
-                null,
-                null,
-                null,
-                null);
+        CursorLoader cl = null;
+        if( args != null && args.containsKey(DEAD_LINE_DATE))
+        {
+            long deadline = args.getLong(DEAD_LINE_DATE);
+            cl =  new CursorLoader(getActivity(),
+                    TodoContract.TaskEntry.buildTaskWithRange(deadline),
+                    null,
+                    TodoContract.TaskEntry.COLUMN_DUE_DATE + " <= ? ",
+                    new String[] {Long.toString(deadline)},
+                    TodoContract.TaskEntry.COLUMN_DUE_DATE + " ASC");
+        }
+        else if( args!= null && args.containsKey(GOAL_ID))
+        {
+            long goal_id = args.getInt(GOAL_ID);
+            cl =  new CursorLoader(getActivity(),
+                    TodoContract.TaskEntry.buildTaskWithGoal(goal_id),
+                    null,
+                    null,
+                    null,
+                    null);
+        }
+        else
+        {
+            cl =  new CursorLoader(getActivity(),
+                    TodoContract.TaskEntry.CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    null);
+        }
+
+        return cl;
     }
 
     @Override

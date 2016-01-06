@@ -38,15 +38,14 @@ public class TodoContract {
         public static final String COLUMN_IS_REMINDER = "is_reminder";
         public static final String COLUMN_PRIORITY = "priority";
 
-        public static final String QUERY_START_DATE = "start_date";
-        public static final String QUERY_END_DATE = "end_date";
+
+        public static final String QUERY_DEAD_LINE_DATE = "deadline_date";
 
 
-        public static Uri buildTaskWithRange(long startDate, long endDate)
+        public static Uri buildTaskWithRange(long endDate)
         {
-            return CONTENT_URI.buildUpon().
-                     appendQueryParameter(QUERY_START_DATE, Long.toString(startDate))
-                    .appendQueryParameter(QUERY_END_DATE, Long.toString(endDate))
+            return CONTENT_URI.buildUpon()
+                    .appendQueryParameter(QUERY_DEAD_LINE_DATE, Long.toString(endDate))
                     .build();
         }
 
@@ -65,14 +64,9 @@ public class TodoContract {
             return  Integer.getInteger(uri.getPathSegments().get(3));
         }
 
-        public static int getStartDateFromUri(Uri uri)
-        {
-            return  Integer.getInteger(uri.getQueryParameter(QUERY_START_DATE));
-        }
-
         public static int getEndDateFromUri(Uri uri)
         {
-            return  Integer.getInteger(uri.getQueryParameter(QUERY_END_DATE));
+            return  Integer.getInteger(uri.getQueryParameter(QUERY_DEAD_LINE_DATE));
         }
     }
 

@@ -34,8 +34,7 @@ public class TodoProvider extends ContentProvider {
 
     private static final String sTaskByDateRangeSelection =
             TodoContract.TaskEntry.TABLE_NAME +
-                    "." + TodoContract.TaskEntry.COLUMN_DUE_DATE + " >= ? AND " +
-                    TodoContract.TaskEntry.COLUMN_DUE_DATE + " <= ? ";
+                    "." + TodoContract.TaskEntry.COLUMN_DUE_DATE + " <= ?";
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     static UriMatcher buildUriMatcher() {
@@ -55,7 +54,7 @@ public class TodoProvider extends ContentProvider {
         // content://[Project8]/tasks/goal/123
         matcher.addURI(authority, TodoContract.PATH_TASKS + "/" +
                 TodoContract.PATH_GOAL  + "/#", TASKS_WITH_GOAL);
-        // content://[Project8]/tasks?start_date=123&end_date=456
+        // content://[Project8]/tasks?deadline=456
         matcher.addURI(authority, TodoContract.PATH_TASKS + "/*", TASKS_WITH_DATE_RANGE);
 
         return matcher;
@@ -81,13 +80,12 @@ public class TodoProvider extends ContentProvider {
     }
 
     private Cursor getTaskByDateRange(Uri uri, String[] projection, String sortOrder) {
-        int _start_date = TodoContract.TaskEntry.getStartDateFromUri(uri);
         int _end_date = TodoContract.TaskEntry.getEndDateFromUri(uri);
 
         return sTaskQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 sTaskByDateRangeSelection,
-                new String[]{Integer.toString(_start_date), Integer.toString(_end_date)},
+                new String[]{Integer.toString(_end_date)},
                 null,
                 null,
                 sortOrder
