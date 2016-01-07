@@ -69,7 +69,6 @@ public class TaskActivity extends AppCompatActivity {
             mViewPriority.setEnabled(false);
             mViewIsReminder.setChecked(mCursor.getInt(TasksFragment.COL_TASK_IS_REMINDER) == 1);
             mViewIsReminder.setEnabled(false);
-
             // only comment can be edit.
             mViewComment.setText(mCursor.getString(TasksFragment.COL_TASK_COMMENT));
 
@@ -136,7 +135,10 @@ public class TaskActivity extends AppCompatActivity {
                     taskValues, TodoContract.TaskEntry._ID + "= ?",
                     new String[]{Long.toString(mId)});
         }
+        finish();
+    }
 
+    public void discardTask(View v) {
         finish();
     }
 
