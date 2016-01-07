@@ -51,11 +51,12 @@ public class TodoProvider extends ContentProvider {
         // content://[Project8]/goal
         matcher.addURI(authority, TodoContract.PATH_GOALS, GOALS);
 
-        // content://[Project8]/tasks/goal/123
-        matcher.addURI(authority, TodoContract.PATH_TASKS + "/" +
+        // content://[Project8]/task/goal/123
+        matcher.addURI(authority, TodoContract.PATH_TASK + "/" +
                 TodoContract.PATH_GOAL  + "/#", TASKS_WITH_GOAL);
-        // content://[Project8]/tasks?deadline=456
-        matcher.addURI(authority, TodoContract.PATH_TASKS + "/*", TASKS_WITH_DATE_RANGE);
+        // content://[Project8]/tasks/deadline/456
+        matcher.addURI(authority, TodoContract.PATH_TASK + "/" +
+                TodoContract.TaskEntry.QUERY_DEAD_LINE_DATE + "/#", TASKS_WITH_DATE_RANGE);
 
         return matcher;
     }

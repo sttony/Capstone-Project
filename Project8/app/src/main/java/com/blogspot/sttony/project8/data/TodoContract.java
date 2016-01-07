@@ -12,7 +12,6 @@ public class TodoContract {
     public static final String CONTENT_AUTHORITY = "com.blogspot.sttony.project8.app";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_TASK = "task";
-    public static final String PATH_TASKS = "tasks";
     public static final String PATH_GOAL = "goal";
     public static final String PATH_GOALS = "goals";
 
@@ -44,14 +43,14 @@ public class TodoContract {
 
         public static Uri buildTaskWithRange(long endDate)
         {
-            return CONTENT_URI.buildUpon()
-                    .appendQueryParameter(QUERY_DEAD_LINE_DATE, Long.toString(endDate))
-                    .build();
+            return ContentUris.withAppendedId(CONTENT_URI.buildUpon().
+                    appendPath(QUERY_DEAD_LINE_DATE).build(), endDate);
         }
 
         public static Uri buildTaskWithGoal(long goal_id)
         {
-            return ContentUris.withAppendedId(CONTENT_URI.buildUpon().appendPath(PATH_GOAL).build(), goal_id);
+            return ContentUris.withAppendedId(CONTENT_URI.buildUpon().
+                    appendPath(PATH_GOAL).build(), goal_id);
         }
 
         public static Uri buildTaskUri(long task_id)
@@ -61,12 +60,12 @@ public class TodoContract {
 
         public static long getGoalIdFromUri(Uri uri)
         {
-            return  Long.getLong(uri.getPathSegments().get(2));
+            return Long.parseLong(uri.getPathSegments().get(2));
         }
 
         public static long getEndDateFromUri(Uri uri)
         {
-            return  Long.getLong(uri.getQueryParameter(QUERY_DEAD_LINE_DATE));
+            return Long.parseLong(uri.getPathSegments().get(2));
         }
     }
 
