@@ -128,7 +128,13 @@ public class TaskActivity extends AppCompatActivity {
         else
         {
             // update only comment is editable
-
+            ContentValues taskValues = new ContentValues();
+            taskValues.put(TodoContract.TaskEntry._ID, mId);
+            taskValues.put(TodoContract.TaskEntry.COLUMN_COMMENT, mViewComment.getText().toString());
+            int updatedNumber = this.getContentResolver().update(
+                    TodoContract.TaskEntry.CONTENT_URI,
+                    taskValues, TodoContract.TaskEntry._ID + "= ?",
+                    new String[]{Long.toString(mId)});
         }
 
         finish();
