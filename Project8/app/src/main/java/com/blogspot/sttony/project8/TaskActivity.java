@@ -3,6 +3,7 @@ package com.blogspot.sttony.project8;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class TaskActivity extends AppCompatActivity {
     private EditText mViewPriority = null;
     private  EditText mViewComment = null;
     private CheckBox mViewIsReminder = null;
+    private Cursor mCursor = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,13 @@ public class TaskActivity extends AppCompatActivity {
 
         setViewById();
         setDueDateDialog();
+        if(mId != -1)
+        {
+            mCursor = this.getContentResolver().query(TodoContract.TaskEntry.buildTaskUri(mId),
+                    null,null,
+                    null,
+                    null);
+        }
 
     }
 

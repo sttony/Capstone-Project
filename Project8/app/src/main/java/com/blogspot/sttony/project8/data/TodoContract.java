@@ -59,14 +59,14 @@ public class TodoContract {
             return ContentUris.withAppendedId(CONTENT_URI, task_id);
         }
 
-        public static int getGoalIdFromUri(Uri uri)
+        public static long getGoalIdFromUri(Uri uri)
         {
-            return  Integer.getInteger(uri.getPathSegments().get(3));
+            return  Long.getLong(uri.getPathSegments().get(2));
         }
 
-        public static int getEndDateFromUri(Uri uri)
+        public static long getEndDateFromUri(Uri uri)
         {
-            return  Integer.getInteger(uri.getQueryParameter(QUERY_DEAD_LINE_DATE));
+            return  Long.getLong(uri.getQueryParameter(QUERY_DEAD_LINE_DATE));
         }
     }
 

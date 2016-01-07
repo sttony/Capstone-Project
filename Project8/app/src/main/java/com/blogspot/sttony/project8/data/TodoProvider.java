@@ -67,12 +67,12 @@ public class TodoProvider extends ContentProvider {
     }
 
     private Cursor getTaskByGoal(Uri uri, String[] projection, String sortOrder) {
-        int _id = TodoContract.TaskEntry.getGoalIdFromUri(uri);
+        long _id = TodoContract.TaskEntry.getGoalIdFromUri(uri);
 
         return sTaskQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 sTaskByGoalSelection,
-                new String[]{Integer.toString(_id)},
+                new String[]{Long.toString(_id)},
                 null,
                 null,
                 sortOrder
@@ -80,12 +80,12 @@ public class TodoProvider extends ContentProvider {
     }
 
     private Cursor getTaskByDateRange(Uri uri, String[] projection, String sortOrder) {
-        int _end_date = TodoContract.TaskEntry.getEndDateFromUri(uri);
+        long _end_date = TodoContract.TaskEntry.getEndDateFromUri(uri);
 
         return sTaskQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 sTaskByDateRangeSelection,
-                new String[]{Integer.toString(_end_date)},
+                new String[]{Long.toString(_end_date)},
                 null,
                 null,
                 sortOrder
