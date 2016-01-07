@@ -1,7 +1,10 @@
 package com.blogspot.sttony.project8;
 
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +22,12 @@ import java.util.Locale;
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapterViewHolder> {
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
     private Cursor mCursor;
+    private Context mContext;
 
-    public TasksAdapter(TodoAdapterOnClickHandler vh) {
+    public TasksAdapter(TodoAdapterOnClickHandler vh, Context _content) {
         super();
         mClickHandler = vh;
+        mContext = _content;
     }
 
     final private TodoAdapterOnClickHandler mClickHandler;
@@ -50,11 +55,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
         holder.mTitleView.setText(title);
         String duedateStr = simpleDateFormat.format(new Date(duedate));
         holder.mDueDateView.setText(duedateStr);
-
         if( isCompleted ==1)
         {
+            holder.mTitleView.setPaintFlags(holder.mTitleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.mDueDateView.setPaintFlags(holder.mTitleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.mIsCompletedView.setClickable(false);
-
         }
     }
 
@@ -70,7 +75,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
         //mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
-    public static interface TodoAdapterOnClickHandler {
+    public interface TodoAdapterOnClickHandler {
         void onClick(Long id, TasksAdapterViewHolder vh);
     }
 
@@ -85,6 +90,24 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
             mIsCompletedView = (CheckBox)itemView.findViewById(R.id.view_task_item_is_complete);
             mTitleView =(TextView)itemView.findViewById(R.id.view_task_item_title);
             mDueDateView =(TextView)itemView.findViewById(R.id.view_task_item_due_date);
+
+
+            mIsCompletedView.setOnClickListener(new CheckBox.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int adapterPosition = getAdapterPosition();
+                    mCursor.moveToPosition(adapterPosition);
+                    long _id = mCursor.getLong(TasksFragment.COL_TASK_ID);
+                    ContentValues taskValues = new ContentValues();
+                    taskValues.put(TodoContract.TaskEntry._ID, _id);
+                    taskValues.put(TodoContract.TaskEntry.COLUMN_IS_COMPLETE, 1);
+                    int updatedNumber = mContext.getContentResolver().update(
+                            TodoContract.TaskEntry.CONTENT_URI,
+                            taskValues, TodoContract.TaskEntry._ID + "= ?",
+                            new String[]{Long.toString(_id)});
+                    notifyDataSetChanged();
+                }
+            });
             itemView.setOnClickListener(this);
         }
 

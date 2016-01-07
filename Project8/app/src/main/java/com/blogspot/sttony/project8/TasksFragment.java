@@ -91,7 +91,7 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
                         .putExtras(args);
                 startActivity(intent);
             }
-        });
+        }, getContext());
         mRecyclerView.setAdapter(mTasksAdapter);
         if(savedInstanceState != null) {
             getLoaderManager().initLoader(0, savedInstanceState, this);
@@ -134,7 +134,7 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        CursorLoader cl = null;
+        CursorLoader cl;
         if( args != null && args.containsKey(DEAD_LINE_DATE))
         {
             long deadline = args.getLong(DEAD_LINE_DATE);
