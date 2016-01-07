@@ -32,6 +32,10 @@ public class TodoProvider extends ContentProvider {
             TodoContract.TaskEntry.TABLE_NAME +
                     "." + TodoContract.TaskEntry.COLUMN_GOAL_ID + " = ? ";
 
+    private static final String sTaskByIdSelection =
+            TodoContract.TaskEntry.TABLE_NAME +
+                    "." + TodoContract.TaskEntry._ID + " = ? ";
+
     private static final String sTaskByDateRangeSelection =
             TodoContract.TaskEntry.TABLE_NAME +
                     "." + TodoContract.TaskEntry.COLUMN_DUE_DATE + " <= ?";
@@ -80,6 +84,19 @@ public class TodoProvider extends ContentProvider {
         );
     }
 
+    private Cursor getTaskById(Uri uri, String[] projection, String sortOrder) {
+        long _id = TodoContract.TaskEntry.getIdFromUri(uri);
+
+        return sTaskQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sTaskByIdSelection,
+                new String[]{Long.toString(_id)},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
     private Cursor getTaskByDateRange(Uri uri, String[] projection, String sortOrder) {
         long _end_date = TodoContract.TaskEntry.getEndDateFromUri(uri);
 
@@ -100,14 +117,7 @@ public class TodoProvider extends ContentProvider {
         Cursor retCursor = null;
         switch (sUriMatcher.match(uri)) {
             case TASK:
-                retCursor = mOpenHelper.getReadableDatabase().query(
-                        TodoContract.TaskEntry.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder);
+                retCursor = getTaskById(uri, projection, sortOrder);
                 break;
             case GOAL:
                 retCursor = mOpenHelper.getReadableDatabase().query(

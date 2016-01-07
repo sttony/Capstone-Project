@@ -60,6 +60,19 @@ public class TaskActivity extends AppCompatActivity {
                     null,null,
                     null,
                     null);
+            mCursor.moveToFirst();
+            mViewTitle.setText(mCursor.getString(TasksFragment.COL_TASK_TITLE));
+            mViewTitle.setEnabled(false);
+            mViewDueDate.setText(dateFormatter.format(new Date(mCursor.getLong(TasksFragment.COL_TASK_DUE_DATE))));
+            mViewDueDate.setEnabled(false);
+            mViewPriority.setText(Integer.toString(mCursor.getInt(TasksFragment.COL_TASK_PRIORITY)));
+            mViewPriority.setEnabled(false);
+            mViewIsReminder.setChecked(mCursor.getInt(TasksFragment.COL_TASK_IS_REMINDER) == 1);
+            mViewIsReminder.setEnabled(false);
+
+            // only comment can be edit.
+            mViewComment.setText(mCursor.getString(TasksFragment.COL_TASK_COMMENT));
+
         }
 
     }
@@ -114,7 +127,8 @@ public class TaskActivity extends AppCompatActivity {
         }
         else
         {
-            // update
+            // update only comment is editable
+
         }
 
         finish();

@@ -63,6 +63,10 @@ public class TodoContract {
             return Long.parseLong(uri.getPathSegments().get(2));
         }
 
+        public static long getIdFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(1));
+        }
+
         public static long getEndDateFromUri(Uri uri)
         {
             return Long.parseLong(uri.getPathSegments().get(2));

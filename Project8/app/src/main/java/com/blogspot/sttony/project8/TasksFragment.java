@@ -39,7 +39,10 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
     static final int COL_TASK_ID = 0;
     static final int COL_TASK_DUE_DATE = 2;
     static final int COL_TASK_IS_COMPLETE = 3;
+    static final int COL_TASK_IS_REMINDER = 4;
     static final int COL_TASK_TITLE = 6;
+    static final int COL_TASK_COMMENT = 7;
+    static final int COL_TASK_PRIORITY = 8;
 
     public static TasksFragment newInstance(long param1, long param2) {
         TasksFragment fragment = new TasksFragment();
