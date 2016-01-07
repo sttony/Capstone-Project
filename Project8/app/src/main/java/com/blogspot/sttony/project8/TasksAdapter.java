@@ -58,8 +58,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
         if( isCompleted ==1)
         {
             holder.mTitleView.setPaintFlags(holder.mTitleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.mDueDateView.setPaintFlags(holder.mTitleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.mDueDateView.setPaintFlags(holder.mDueDateView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.mIsCompletedView.setClickable(false);
+        } else {
+            holder.mTitleView.setPaintFlags(holder.mTitleView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.mDueDateView.setPaintFlags(holder.mDueDateView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.mIsCompletedView.setClickable(true);
         }
     }
 
