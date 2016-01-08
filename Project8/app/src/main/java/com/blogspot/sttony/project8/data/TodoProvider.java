@@ -97,13 +97,13 @@ public class TodoProvider extends ContentProvider {
         );
     }
 
-    private Cursor getTaskByDateRange(Uri uri, String[] projection, String sortOrder) {
-        long _end_date = TodoContract.TaskEntry.getEndDateFromUri(uri);
+    private Cursor getTaskByDateRange(Uri uri,String _selection, String[] _selectionArgs,  String[] projection, String sortOrder) {
+        //long _end_date = TodoContract.TaskEntry.getEndDateFromUri(uri);
 
         return sTaskQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
-                sTaskByDateRangeSelection,
-                new String[]{Long.toString(_end_date)},
+                _selection,
+                _selectionArgs,
                 null,
                 null,
                 sortOrder
@@ -144,7 +144,7 @@ public class TodoProvider extends ContentProvider {
                 retCursor = getTaskByGoal(uri,projection, sortOrder);
                 break;
             case TASKS_WITH_DATE_RANGE:
-                retCursor =getTaskByDateRange(uri, projection, sortOrder);
+                retCursor =getTaskByDateRange(uri,selection, selectionArgs,  projection, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

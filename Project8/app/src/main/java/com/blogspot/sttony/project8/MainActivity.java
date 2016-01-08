@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     c.set(c.get(Calendar.YEAR),
                             c.get(Calendar.MONTH),
                             c.get(Calendar.DAY_OF_MONTH),
-                            11,
+                            23,
                             59,
                             59
                     );
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     c.set(c.get(Calendar.YEAR),
                             c.get(Calendar.MONTH),
                             c.get(Calendar.DAY_OF_MONTH) + 7 - c.get(Calendar.DAY_OF_WEEK),
-                            11,
+                            23,
                             59,
                             59
                     );

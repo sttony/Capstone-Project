@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.blogspot.sttony.project8.data.TodoContract;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -105,6 +106,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
                     ContentValues taskValues = new ContentValues();
                     taskValues.put(TodoContract.TaskEntry._ID, _id);
                     taskValues.put(TodoContract.TaskEntry.COLUMN_IS_COMPLETE, 1);
+                    Calendar c = Calendar.getInstance();
+                    taskValues.put(TodoContract.TaskEntry.COLUMN_COMPLETE_DATE, c.getTime().getTime());
                     int updatedNumber = mContext.getContentResolver().update(
                             TodoContract.TaskEntry.CONTENT_URI,
                             taskValues, TodoContract.TaskEntry._ID + "= ?",
