@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 
 import com.blogspot.sttony.project8.data.TodoContract;
 
+import java.util.Calendar;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -135,14 +137,35 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         CursorLoader cl;
+        Calendar c = Calendar.getInstance();
+        c.set(c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH),
+                0,
+                0,
+                0
+        );
+        long todayStart = c.getTime().getTime();
+        c.set(
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH),
+                23,
+                59,
+                59
+        );
+        long todayEnd = c.getTime().getTime();
         if( args != null && args.containsKey(DEAD_LINE_DATE))
         {
             long deadline = args.getLong(DEAD_LINE_DATE);
             cl =  new CursorLoader(getActivity(),
                     TodoContract.TaskEntry.buildTaskWithRange(deadline),
                     null,
-                    TodoContract.TaskEntry.COLUMN_DUE_DATE + " <= ? ",
-                    new String[] {Long.toString(deadline)},
+                    TodoContract.TaskEntry.COLUMN_DUE_DATE + " <= ? AND (" +
+                    TodoContract.TaskEntry.COLUMN_IS_COMPLETE + " =0 OR (" +
+                    TodoContract.TaskEntry.COLUMN_COMPLETE_DATE + " >= ? AND " +
+                    TodoContract.TaskEntry.COLUMN_COMPLETE_DATE + " <= ? )) " ,
+                    new String[] {Long.toString(deadline), Long.toString(todayStart),Long.toString(todayEnd)},
                     TodoContract.TaskEntry.COLUMN_DUE_DATE + " ASC");
         }
         else if( args!= null && args.containsKey(GOAL_ID))

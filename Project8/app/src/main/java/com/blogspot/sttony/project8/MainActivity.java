@@ -22,6 +22,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     ViewPager mViewPager;
+    int mSelectedPageIdx;
     MainActivitySectionsPagerAdapter mMAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,37 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mSelectedPageIdx = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, TaskActivity.class);
-                startActivity(intent);
+                if( mSelectedPageIdx == 0 || mSelectedPageIdx == 1) {
+                    Intent intent = new Intent(MainActivity.this, TaskActivity.class);
+                    startActivity(intent);
+                }
+                else if( mSelectedPageIdx == 2)
+                {
+                    Intent intent = new Intent(MainActivity.this, GoalActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -95,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     c.set(c.get(Calendar.YEAR),
                             c.get(Calendar.MONTH),
                             c.get(Calendar.DAY_OF_MONTH),
-                            11,
+                            23,
                             59,
                             59
                     );
@@ -108,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     c.set(c.get(Calendar.YEAR),
                             c.get(Calendar.MONTH),
                             c.get(Calendar.DAY_OF_MONTH) + 7 - c.get(Calendar.DAY_OF_WEEK),
-                            11,
+                            23,
                             59,
                             59
                     );

@@ -5,9 +5,7 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * Created by sttony on 12/28/2015.
- */
+
 public class TodoContract {
     public static final String CONTENT_AUTHORITY = "com.blogspot.sttony.project8.app";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
@@ -36,6 +34,7 @@ public class TodoContract {
         public static final String COLUMN_COMMENT = "comment";
         public static final String COLUMN_IS_REMINDER = "is_reminder";
         public static final String COLUMN_PRIORITY = "priority";
+        public static final String COLUMN_COMPLETE_DATE ="complete_date";
 
 
         public static final String QUERY_DEAD_LINE_DATE = "deadline_date";
