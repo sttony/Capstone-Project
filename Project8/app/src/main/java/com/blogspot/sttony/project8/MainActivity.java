@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if( mSelectedPageIdx == 2)
                 {
-
+                    Intent intent = new Intent(MainActivity.this, GoalActivity.class);
+                    startActivity(intent);
                 }
-
             }
         });
     }
