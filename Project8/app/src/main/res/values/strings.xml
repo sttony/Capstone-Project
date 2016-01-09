@@ -12,4 +12,11 @@
     <string name="view_field_Title">Title</string>
     <string name="view_field_Due_Date">Due Date</string>
 
+    <string name="view_field_Goal">Goal</string>
+    <string name="view_field_Quantity">Quantity</string>
+    <string name="view_field_Unit">Unit</string>
+    <string name="view_field_In">In</string>
+    <string name="view_field_Duration">Duration</string>
+    <string name="view_field_Weeks">Weeks</string>
+
 </resources>
