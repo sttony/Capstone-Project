@@ -18,5 +18,9 @@
     <string name="view_field_In">In</string>
     <string name="view_field_Duration">Duration</string>
     <string name="view_field_Weeks">Weeks</string>
+    <string name="view_field_Divide">Divide</string>
+    <string name="view_field_As">as</string>
+    <string name="view_field_NumofTask">num</string>
+
 
 </resources>
