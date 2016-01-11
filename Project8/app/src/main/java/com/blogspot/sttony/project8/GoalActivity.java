@@ -9,6 +9,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import com.blogspot.sttony.project8.data.TodoContract;
+
+import java.util.ArrayList;
+
 public class GoalActivity extends AppCompatActivity implements TextWatcher {
     EditText mViewTitle;
     EditText mViewQuantity;
@@ -18,7 +22,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
     FloatingActionButton mViewSave;
 
     long mId = -1;
-    ContentValues[] mTasks;
+    ArrayList<ContentValues> mTasks;
 
 
     private void setViewById() {
@@ -65,6 +69,19 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
         });
 
 
+    }
+
+    private void generateTasks() {
+        mTasks.clear();
+        int num = Integer.getInteger(mViewNum.getText().toString());
+        int total_quantity = Integer.getInteger(mViewQuantity.getText().toString());
+        int total_days = Integer.getInteger(mViewDuration.getText().toString()) * 7;
+
+
+        for (int i = 0; i < num; ++i) {
+            ContentValues cv = new ContentValues();
+
+        }
     }
 
     @Override
