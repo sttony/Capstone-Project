@@ -95,7 +95,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
         int total_quantity = Integer.parseInt(mViewQuantity.getText().toString());
         int quantity = total_quantity / num;
         int total_days = Integer.parseInt(mViewDuration.getText().toString()) * 7;
-        int interval_ms = (total_days / num) * 24 * 3600 * 1000;
+        int interval_ms = (int)(((double)total_days / num) * 24 * 3600 * 1000);
         Calendar c = Calendar.getInstance();
 
         for (int i = 0; i < num; ++i) {
