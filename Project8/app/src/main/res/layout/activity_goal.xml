@@ -129,21 +129,25 @@
             android:text="@string/view_field_Weeks"
             android:textSize="@dimen/abc_text_size_title_material" />
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:layout_column="0"
-            android:layout_columnSpan="6"
-            android:layout_row="4"
-            android:background="@drawable/black_border"
-            >
+        <!--<FrameLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="fill"-->
+        <!--android:layout_column="0"-->
+        <!--android:layout_columnSpan="6"-->
+        <!--android:layout_row="4"-->
+        <!--android:background="@drawable/black_border"-->
+        <!-->-->
 
             <ListView
-                android:id="@+id/view_recycler_goal_subtask"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
+                android:id="@+id/view_list_goal_subtask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_column="0"
+                android:layout_columnSpan="6"></ListView>
+        <!--android:layout_row="4" />-->
+        <!--</FrameLayout>-->
 
     </GridLayout>
 
