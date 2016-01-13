@@ -2,7 +2,9 @@ package com.blogspot.sttony.project8;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -23,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.SimpleFormatter;
 
 public class GoalActivity extends AppCompatActivity implements TextWatcher {
@@ -69,9 +72,25 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
         if( mId == -1) {
             ContentValues taskValues = new ContentValues();
             taskValues.put(TodoContract.GoalEntry.COLUMN_TITLE, mViewTitle.getText().toString());
-            //taskValues.put(TodoContract.GoalEntry.COLUMN_START_DATE, ticks);
+            taskValues.put(TodoContract.GoalEntry.COLUMN_START_DATE,
+                    Long.toString(Calendar.getInstance().getTime().getTime()));
+            taskValues.put(TodoContract.GoalEntry.COLUMN_DURATION,
+                    Integer.valueOf(mViewDuration.getText().toString()));
+            taskValues.put(TodoContract.GoalEntry.COLUMN_QUANTITY,
+                    Integer.valueOf(mViewQuantity.getText().toString()));
+            taskValues.put(TodoContract.GoalEntry.COLUMN_UNIT, mViewUnit.getText().toString());
 
+            Uri insertedUri = this.getContentResolver().insert(
+                    TodoContract.GoalEntry.CONTENT_URI,
+                    taskValues);
+            long id = TodoContract.TaskEntry.getIdFromUri(insertedUri);
 
+            for (int i = 0; i < mTasks.size(); ++i) {
+                mTasks.get(i).put(TodoContract.TaskEntry.COLUMN_GOAL_ID, id);
+                this.getContentResolver().insert(
+                        TodoContract.TaskEntry.CONTENT_URI,
+                        mTasks.get(i));
+            }
         }
 
     }
@@ -86,7 +105,12 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
         mViewSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!isAllFieldsReady()) {
+                    Snackbar.make(v, "Please file all fields", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
                 onSave();
+                finish();
             }
         });
         mTasks = new ArrayList<ContentValues>();
@@ -118,6 +142,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
 
             cv.put(TodoContract.TaskEntry.COLUMN_GOAL_ID, -1); // updated,when sub task is saved.
             cv.put(TodoContract.TaskEntry.COLUMN_PRIORITY, 4);
+            cv.put(TodoContract.TaskEntry.COLUMN_IS_REMINDER, 0);
             cv.put(TodoContract.TaskEntry.COLUMN_DUE_DATE, c.getTime().getTime() + i * interval_ms);
             cv.put(TodoContract.TaskEntry.COLUMN_COMPLETE_DATE, -1);
             if (total_quantity > quantity) {
