@@ -66,6 +66,13 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
     }
 
     private void onSave() {
+        if( mId == -1) {
+            ContentValues taskValues = new ContentValues();
+            taskValues.put(TodoContract.GoalEntry.COLUMN_TITLE, mViewTitle.getText().toString());
+            taskValues.put(TodoContract.GoalEntry.COLUMN_START_DATE, ticks);
+
+
+        }
 
     }
 
@@ -103,7 +110,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
             cv.put(TodoContract.TaskEntry.COLUMN_IS_COMPLETE, 0);
             cv.put(TodoContract.TaskEntry.COLUMN_COMMENT, "");
             cv.put(TodoContract.TaskEntry.COLUMN_TITLE, _title + "- " +
-                    Integer.toString(quantity) + ", " + _unit);
+                    Integer.toString(quantity) + " " + _unit);
             cv.put(TodoContract.TaskEntry.COLUMN_QUANTITY, quantity);
             total_quantity = total_quantity - quantity;
             cv.put(TodoContract.TaskEntry.COLUMN_GOAL_ID, -1); // updated,when sub task is saved.
@@ -150,7 +157,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
             IsCompletedView.setEnabled(false);
             TitleView.setText(m_SubTask.get(position).getAsString(TodoContract.TaskEntry.COLUMN_TITLE));
             String duedateStr = simpleDateFormat.format(
-                    new Date(m_SubTask.get(position).getAsInteger(TodoContract.TaskEntry.COLUMN_DUE_DATE)));
+                    new Date(m_SubTask.get(position).getAsLong(TodoContract.TaskEntry.COLUMN_DUE_DATE)));
             DueDateView.setText(duedateStr);
             return convertView;
         }
