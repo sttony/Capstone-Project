@@ -69,7 +69,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
         if( mId == -1) {
             ContentValues taskValues = new ContentValues();
             taskValues.put(TodoContract.GoalEntry.COLUMN_TITLE, mViewTitle.getText().toString());
-            taskValues.put(TodoContract.GoalEntry.COLUMN_START_DATE, ticks);
+            //taskValues.put(TodoContract.GoalEntry.COLUMN_START_DATE, ticks);
 
 
         }
@@ -100,23 +100,33 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
         String _unit = mViewUnit.getText().toString();
         int num = Integer.parseInt(mViewNum.getText().toString());
         int total_quantity = Integer.parseInt(mViewQuantity.getText().toString());
-        int quantity = total_quantity / num;
+        int quantity = (int) Math.ceil((double) (total_quantity) / num);
+
         int total_days = Integer.parseInt(mViewDuration.getText().toString()) * 7;
         int interval_ms = (int)(((double)total_days / num) * 24 * 3600 * 1000);
         Calendar c = Calendar.getInstance();
 
         for (int i = 0; i < num; ++i) {
+            if (total_quantity < 0) {
+                break;
+            }
             ContentValues cv = new ContentValues();
             cv.put(TodoContract.TaskEntry.COLUMN_IS_COMPLETE, 0);
             cv.put(TodoContract.TaskEntry.COLUMN_COMMENT, "");
             cv.put(TodoContract.TaskEntry.COLUMN_TITLE, _title + "- " +
                     Integer.toString(quantity) + " " + _unit);
-            cv.put(TodoContract.TaskEntry.COLUMN_QUANTITY, quantity);
-            total_quantity = total_quantity - quantity;
+
             cv.put(TodoContract.TaskEntry.COLUMN_GOAL_ID, -1); // updated,when sub task is saved.
             cv.put(TodoContract.TaskEntry.COLUMN_PRIORITY, 4);
             cv.put(TodoContract.TaskEntry.COLUMN_DUE_DATE, c.getTime().getTime() + i * interval_ms);
             cv.put(TodoContract.TaskEntry.COLUMN_COMPLETE_DATE, -1);
+            if (total_quantity > quantity) {
+                cv.put(TodoContract.TaskEntry.COLUMN_QUANTITY, quantity);
+                total_quantity = total_quantity - quantity;
+            } else {
+                cv.put(TodoContract.TaskEntry.COLUMN_QUANTITY, total_quantity);
+                total_quantity = total_quantity - quantity;
+            }
             mTasks.add(cv);
         }
     }
