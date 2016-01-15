@@ -55,6 +55,9 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsAdapter
         mCursor.moveToPosition(position);
         String title = mCursor.getString(GoalsFragment.COL_GOAL_TITLE);
         holder.mTitle.setText(title);
+        holder.mProgress.setMax(100);
+        holder.mProgress.setProgress(50);
+        //holder.mProgress.show()
     }
 
     @Override

@@ -13,11 +13,14 @@
         android:id="@+id/view_field_item_goal_title">
 
     </TextView>
+
     <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="20dp"
         android:id="@+id/view_field_item_goal_progress"
-        />
+        android:layout_gravity="center_horizontal"
+        android:progress="50"
+        android:max="100" />
 
 </LinearLayout>
