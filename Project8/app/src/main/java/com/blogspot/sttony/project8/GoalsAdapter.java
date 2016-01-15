@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blogspot.sttony.project8.data.TodoContract;
+
 import java.util.Date;
 
 /**
@@ -54,10 +56,24 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsAdapter
     public void onBindViewHolder(GoalsAdapterViewHolder holder, int position) {
         mCursor.moveToPosition(position);
         String title = mCursor.getString(GoalsFragment.COL_GOAL_TITLE);
+        long _id = mCursor.getLong(GoalsFragment.COL_GOAL_ID);
+        int total_quantity = mCursor.getInt(GoalsFragment.COL_GOAL_QUANTITY);
+        int quantity = 0;
+
         holder.mTitle.setText(title);
-        holder.mProgress.setMax(100);
-        holder.mProgress.setProgress(50);
-        //holder.mProgress.show()
+        holder.mProgress.setMax(mCursor.getInt(GoalsFragment.COL_GOAL_TITLE));
+
+        Cursor cr = mContext.getContentResolver().query(
+                TodoContract.TaskEntry.buildTaskWithGoal(_id),
+                null, null, null, null);
+        cr.moveToPosition(-1);
+        while(cr.moveToNext()) {
+            if(cr.getInt(TasksFragment.COL_TASK_IS_COMPLETE) == 1) {
+                quantity = quantity + cr.getInt(TasksFragment.COL_TASK_IS_QUANTITY);
+            }
+        }
+        holder.mProgress.setMax(total_quantity);
+        holder.mProgress.setProgress(quantity);
     }
 
     @Override
