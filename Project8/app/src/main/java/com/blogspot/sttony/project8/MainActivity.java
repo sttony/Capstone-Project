@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 case 2: {
-                    GoalsFragment fragmentx = GoalsFragment.newInstance("test1", "test2");
+                    GoalsFragment fragmentx = GoalsFragment.newInstance();
                     return fragmentx;
                 }
 

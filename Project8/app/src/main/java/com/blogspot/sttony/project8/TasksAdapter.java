@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blogspot.sttony.project8.data.TodoContract;
@@ -25,13 +24,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
     private Cursor mCursor;
     private Context mContext;
 
-    public TasksAdapter(TodoAdapterOnClickHandler vh, Context _content) {
+    public TasksAdapter(TaskAdapterOnClickHandler vh, Context _content) {
         super();
         mClickHandler = vh;
         mContext = _content;
     }
 
-    final private TodoAdapterOnClickHandler mClickHandler;
+    final private TaskAdapterOnClickHandler mClickHandler;
 
     @Override
     public TasksAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -80,7 +79,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksAdapter
         //mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
-    public interface TodoAdapterOnClickHandler {
+    public interface TaskAdapterOnClickHandler {
         void onClick(Long id, TasksAdapterViewHolder vh);
     }
 

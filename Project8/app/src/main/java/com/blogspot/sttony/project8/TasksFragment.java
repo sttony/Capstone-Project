@@ -84,7 +84,7 @@ public class TasksFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
 
-        mTasksAdapter = new TasksAdapter(new TasksAdapter.TodoAdapterOnClickHandler() {
+        mTasksAdapter = new TasksAdapter(new TasksAdapter.TaskAdapterOnClickHandler() {
             @Override
             public void onClick(Long id, TasksAdapter.TasksAdapterViewHolder vh) {
                 Bundle args = new Bundle();

@@ -1,12 +1,20 @@
 package com.blogspot.sttony.project8;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.blogspot.sttony.project8.data.TodoContract;
 
 
 /**
@@ -17,32 +25,19 @@ import android.view.ViewGroup;
  * Use the {@link GoalsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GoalsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class GoalsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    static final int COL_GOAL_ID = 0;
+    static final int COL_GOAL_TITLE = 1;
+
 
     private OnFragmentInteractionListener mListener;
+    private RecyclerView mRecyclerView;
+    private GoalsAdapter mGoalsAdapter;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GoalsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static GoalsFragment newInstance(String param1, String param2) {
+    public static GoalsFragment newInstance() {
         GoalsFragment fragment = new GoalsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,8 +50,7 @@ public class GoalsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -64,7 +58,20 @@ public class GoalsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_goals, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_goals, container, false);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.view_recycler_goal);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setHasFixedSize(true);
+
+        mGoalsAdapter = new GoalsAdapter(new GoalsAdapter.GoalAdapterOnClickHandler() {
+            @Override
+            public void onClick(Long id, GoalsAdapter.GoalsAdapterViewHolder vh) {
+
+            }
+        }, getContext());
+        mRecyclerView.setAdapter(mGoalsAdapter);
+        getLoaderManager().initLoader(0, savedInstanceState, this);
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -89,6 +96,28 @@ public class GoalsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        CursorLoader cl;
+        cl =  new CursorLoader(getActivity(),
+                TodoContract.GoalEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+        return cl;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mGoalsAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 
     /**
