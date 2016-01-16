@@ -29,6 +29,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.logging.SimpleFormatter;
 
 public class GoalActivity extends AppCompatActivity implements TextWatcher {
+    public static  final String GOAL_ID = "goal_id";
+
     EditText mViewTitle;
     EditText mViewQuantity;
     EditText mViewUnit;

@@ -74,6 +74,8 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsAdapter
         }
         holder.mProgress.setMax(total_quantity);
         holder.mProgress.setProgress(quantity);
+        holder.mProgressText.setText(Integer.toString(quantity) + "/" + Integer.toString(total_quantity));
+
     }
 
     @Override
@@ -84,18 +86,23 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsAdapter
 
     public class GoalsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mTitle;
+        public final TextView mProgressText;
         public final ProgressBar mProgress;
 
         public GoalsAdapterViewHolder(View itemView) {
             super(itemView);
             mTitle = (TextView)itemView.findViewById(R.id.view_field_item_goal_title);
+            mProgressText = (TextView)itemView.findViewById(R.id.view_field_item_goal_progress_text);
             mProgress = (ProgressBar)itemView.findViewById(R.id.view_field_item_goal_progress);
+            itemView.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View v) {
-
+            int adapterPosition = getAdapterPosition();
+            mCursor.moveToPosition(adapterPosition);
+            mClickHandler.onClick(mCursor.getLong(GoalsFragment.COL_GOAL_ID), this);
         }
     }
 }
