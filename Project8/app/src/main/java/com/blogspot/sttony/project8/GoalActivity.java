@@ -2,6 +2,8 @@ package com.blogspot.sttony.project8;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,6 +31,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.logging.SimpleFormatter;
 
 public class GoalActivity extends AppCompatActivity implements TextWatcher {
+    public static  final String GOAL_ID = "goal_id";
+
     EditText mViewTitle;
     EditText mViewQuantity;
     EditText mViewUnit;
@@ -37,6 +41,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
     GoalSubTaskArrayAdapter mTaskListAdapter;
     ListView mViewTaskList;
     FloatingActionButton mViewSave;
+    private Cursor mCursor = null;
 
     long mId = -1;
     ArrayList<ContentValues> mTasks;
@@ -100,6 +105,16 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
 
+        if(savedInstanceState != null && savedInstanceState.containsKey(GoalActivity.GOAL_ID))
+        {
+            mId = savedInstanceState.getLong(GOAL_ID);
+        }
+        Intent intent = getIntent();
+        if(intent != null && intent.getExtras()!=null && intent.getExtras().containsKey(GOAL_ID ))
+        {
+            mId = intent.getExtras().getLong(GOAL_ID);
+        }
+
         setViewById();
 
         mViewSave.setOnClickListener(new View.OnClickListener() {
@@ -113,9 +128,29 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
                 finish();
             }
         });
+
         mTasks = new ArrayList<ContentValues>();
         mTaskListAdapter = new GoalSubTaskArrayAdapter(this, R.layout.list_item_task, mTasks);
         mViewTaskList.setAdapter(mTaskListAdapter);
+
+        if(mId != -1) {
+            mCursor = this.getContentResolver().query(TodoContract.GoalEntry.buildGoalUri(mId),
+                    null, null,
+                    null,
+                    null);
+
+            mCursor.moveToFirst();
+            mViewTitle.setText(mCursor.getString(GoalsFragment.COL_GOAL_TITLE));
+            mViewTitle.setEnabled(false);
+            mViewDuration.setText(Integer.toString(mCursor.getInt(GoalsFragment.COL_GOAL_DURATION)));
+            mViewDuration.setEnabled(false);
+            mViewQuantity.setText(Integer.toString(mCursor.getInt(GoalsFragment.COL_GOAL_QUANTITY)));
+            mViewQuantity.setEnabled(false);
+            mViewUnit.setText(mCursor.getString((GoalsFragment.COL_GOAL_UNIT)));
+            mViewUnit.setEnabled(false);
+            mViewNum.setText(mCursor.getString(GoalsFragment.COL_GOAL_START_DATE));
+            mViewNum.setEnabled(false);
+        }
     }
 
     private void generateTasks() {
@@ -169,7 +204,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         // if all fields are filed,
-        if (isAllFieldsReady()) {
+        if (isAllFieldsReady() && mId == -1) {
             generateTasks();
             mTaskListAdapter.notifyDataSetChanged();
         }

@@ -1,6 +1,7 @@
 package com.blogspot.sttony.project8;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,10 @@ public class GoalsFragment extends Fragment implements LoaderManager.LoaderCallb
 
     static final int COL_GOAL_ID = 0;
     static final int COL_GOAL_TITLE = 1;
+    static final int COL_GOAL_DURATION = 2;
+    static final int COL_GOAL_QUANTITY = 3;
+    static final int COL_GOAL_UNIT = 4;
+    static final int COL_GOAL_START_DATE = 5;
 
 
     private OnFragmentInteractionListener mListener;
@@ -66,7 +71,11 @@ public class GoalsFragment extends Fragment implements LoaderManager.LoaderCallb
         mGoalsAdapter = new GoalsAdapter(new GoalsAdapter.GoalAdapterOnClickHandler() {
             @Override
             public void onClick(Long id, GoalsAdapter.GoalsAdapterViewHolder vh) {
-
+                Bundle args = new Bundle();
+                args.putLong(GoalActivity.GOAL_ID, id);
+                Intent intent = new Intent(GoalsFragment.this.getContext(), GoalActivity.class)
+                        .putExtras(args);
+                startActivity(intent);
             }
         }, getContext());
         mRecyclerView.setAdapter(mGoalsAdapter);
