@@ -30,7 +30,10 @@ public class GoalsFragment extends Fragment implements LoaderManager.LoaderCallb
 
     static final int COL_GOAL_ID = 0;
     static final int COL_GOAL_TITLE = 1;
+    static final int COL_GOAL_DURATION = 2;
     static final int COL_GOAL_QUANTITY = 3;
+    static final int COL_GOAL_UNIT = 4;
+    static final int COL_GOAL_START_DATE = 5;
 
 
     private OnFragmentInteractionListener mListener;
