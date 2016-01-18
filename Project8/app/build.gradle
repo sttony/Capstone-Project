@@ -25,6 +25,15 @@ android {
             signingConfig signingConfigs.config
         }
     }
+
+    productFlavors{
+        free{
+            applicationId "com.blogspot.sttony.project8.free"
+        }
+        paid{
+            applicationId "com.blogspot.sttony.project8.paid"
+        }
+    }
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
@@ -37,4 +46,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.google.gdata:core:1.47.1'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }
