@@ -149,8 +149,6 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
             mViewQuantity.setEnabled(false);
             mViewUnit.setText(mCursor.getString((GoalsFragment.COL_GOAL_UNIT)));
             mViewUnit.setEnabled(false);
-            mViewNum.setText(mCursor.getString(GoalsFragment.COL_GOAL_START_DATE));
-            mViewNum.setEnabled(false);
 
             Cursor cr = this.getContentResolver().query(TodoContract.TaskEntry.buildTaskWithGoal(mId),
                     null, null, null, null);
@@ -164,6 +162,9 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
             }
             cr.close();
             mTaskListAdapter.notifyDataSetChanged();
+            mViewNum.setText(Integer.toString(mTasks.size()));
+            mViewNum.setEnabled(false);
+
 
         }
     }
