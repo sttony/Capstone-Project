@@ -17,10 +17,12 @@
     <string name="view_field_Unit">Unit</string>
     <string name="view_field_In">In</string>
     <string name="view_field_Duration">Duration</string>
-    <string name="view_field_Weeks">Weeks</string>
+    <string name="view_field_Weeks">weeks</string>
     <string name="view_field_Divide">Divide</string>
     <string name="view_field_As">as</string>
     <string name="view_field_NumofTask">num</string>
 
+    <string name="GOOGLE_SHEET_CLIENT_ID">542617036223-18t8cn062h7dlc1o4qg2141j2cqa138p.apps.googleusercontent.com </string>
+    <string name="GOOGLE_SHEET_CLIENT_SECRET"></string>
 
 </resources>
