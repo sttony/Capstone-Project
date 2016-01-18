@@ -72,6 +72,7 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.GoalsAdapter
                 quantity = quantity + cr.getInt(TasksFragment.COL_TASK_IS_QUANTITY);
             }
         }
+        cr.close();
         holder.mProgress.setMax(total_quantity);
         holder.mProgress.setProgress(quantity);
         holder.mProgressText.setText(Integer.toString(quantity) + "/" + Integer.toString(total_quantity));
