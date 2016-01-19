@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import junit.framework.Assert;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 

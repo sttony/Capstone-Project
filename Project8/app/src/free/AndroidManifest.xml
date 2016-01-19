@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.blogspot.sttony.project8">
 
@@ -30,6 +29,9 @@
 
         <activity android:name=".TaskActivity"></activity>
         <activity android:name=".GoalActivity"></activity>
+
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            />
 
         <meta-data
             android:name="com.google.android.gms.version"

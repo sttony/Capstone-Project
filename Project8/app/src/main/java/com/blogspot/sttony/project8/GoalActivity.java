@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -148,8 +149,23 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
             mViewQuantity.setEnabled(false);
             mViewUnit.setText(mCursor.getString((GoalsFragment.COL_GOAL_UNIT)));
             mViewUnit.setEnabled(false);
-            mViewNum.setText(mCursor.getString(GoalsFragment.COL_GOAL_START_DATE));
+
+            Cursor cr = this.getContentResolver().query(TodoContract.TaskEntry.buildTaskWithGoal(mId),
+                    null, null, null, null);
+
+            mTasks.clear();
+            cr.moveToPosition(-1);
+            while(cr.moveToNext()) {
+                ContentValues map = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cr, map);
+                mTasks.add(map);
+            }
+            cr.close();
+            mTaskListAdapter.notifyDataSetChanged();
+            mViewNum.setText(Integer.toString(mTasks.size()));
             mViewNum.setEnabled(false);
+
+
         }
     }
 
