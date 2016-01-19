@@ -7,22 +7,28 @@ android {
             keyPassword 'fc82126&'
             storeFile file('C:/devtools/Android/keystore/keystore.jks')
             storePassword 'fc82126&'
+
         }
     }
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
+
     defaultConfig {
         applicationId "com.blogspot.sttony.project8"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+        }
+        debug{
+            multiDexEnabled true
         }
     }
 
@@ -37,6 +43,9 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 
