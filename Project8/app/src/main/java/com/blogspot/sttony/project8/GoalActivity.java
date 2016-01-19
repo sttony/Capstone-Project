@@ -155,7 +155,7 @@ public class GoalActivity extends AppCompatActivity implements TextWatcher {
 
             mTasks.clear();
             cr.moveToPosition(-1);
-            while(cr.moveToNext()) {
+            while (cr.moveToNext()) {
                 ContentValues map = new ContentValues();
                 DatabaseUtils.cursorRowToContentValues(cr, map);
                 mTasks.add(map);

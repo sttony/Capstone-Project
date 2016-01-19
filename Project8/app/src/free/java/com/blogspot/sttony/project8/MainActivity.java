@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     int mSelectedPageIdx;
     MainActivitySectionsPagerAdapter mMAdapter;
     private AdView madView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getString(R.string.Goals)
         };
 
-        mMAdapter = new MainActivitySectionsPagerAdapter(getSupportFragmentManager(),titles);
+        mMAdapter = new MainActivitySectionsPagerAdapter(getSupportFragmentManager(), titles);
         mViewPager = (ViewPager) findViewById(R.id.mainpager);
         mViewPager.setAdapter(mMAdapter);
 
@@ -70,12 +71,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( mSelectedPageIdx == 0 || mSelectedPageIdx == 1) {
+                if (mSelectedPageIdx == 0 || mSelectedPageIdx == 1) {
                     Intent intent = new Intent(MainActivity.this, TaskActivity.class);
                     startActivity(intent);
-                }
-                else if( mSelectedPageIdx == 2)
-                {
+                } else if (mSelectedPageIdx == 2) {
                     Intent intent = new Intent(MainActivity.this, GoalActivity.class);
                     startActivity(intent);
                 }
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // disaplay ad
-        madView = (AdView)this.findViewById(R.id.view_ad);
+        madView = (AdView) this.findViewById(R.id.view_ad);
         AdRequest adRequest = new AdRequest.Builder().build();
         madView.loadAd(adRequest);
     }
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public CharSequence getPageTitle(int position) {
-            Assert.assertTrue(position>=0 && position<=3);
+            Assert.assertTrue(position >= 0 && position <= 3);
             return mTitles[position];
         }
     }
