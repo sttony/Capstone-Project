@@ -20,7 +20,6 @@ import com.google.android.gms.ads.AdView;
 import junit.framework.Assert;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
