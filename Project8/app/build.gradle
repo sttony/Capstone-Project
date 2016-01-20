@@ -27,16 +27,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
-        debug{
+        debug {
             multiDexEnabled true
         }
     }
 
-    productFlavors{
-        free{
+    productFlavors {
+        free {
             applicationId "com.blogspot.sttony.project8.free"
         }
-        paid{
+        paid {
             applicationId "com.blogspot.sttony.project8.paid"
         }
     }
