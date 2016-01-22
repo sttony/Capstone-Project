@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'projec8'
             keyPassword 'fc82126&'
-            storeFile file('C:/devtools/Android/keystore/keystore.jks')
+            storeFile file('keystore.jks')
             storePassword 'fc82126&'
 
         }
