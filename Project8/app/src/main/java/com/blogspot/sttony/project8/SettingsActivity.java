@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
 
-        Preference export2GDrive = (Preference) findPreference("export");
+        Preference export2GDrive = findPreference("export");
         export2GDrive.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
 
@@ -66,7 +66,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements
                             .build();
                 }
                 mGoogleApiClient.connect();
-
 
 
                 Drive.DriveApi.newDriveContents(mGoogleApiClient)

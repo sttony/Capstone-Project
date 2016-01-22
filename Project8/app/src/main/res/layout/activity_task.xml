@@ -8,7 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.blogspot.sttony.project8.TaskActivity">
+    tools:context="com.blogspot.sttony.project8.TaskActivity"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin">
 
     <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -105,7 +107,7 @@
             android:layout_columnSpan="4"
             android:layout_row="4"
             android:hint="Comment"
-            android:gravity="left|top"
+            android:gravity="start|top"
             android:inputType="textMultiLine"
             android:background="@drawable/black_border"
             android:id="@+id/view_field_comment"
