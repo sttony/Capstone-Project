@@ -33,5 +33,6 @@
     <string name="view_field_comment">Comment</string>
     <string name="view_field_discard">Discard</string>
     <string name="view_field_save">Save</string>
+    <string name="view_button_add">Add</string>
 
 </resources>
