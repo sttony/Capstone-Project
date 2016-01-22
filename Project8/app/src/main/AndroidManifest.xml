@@ -28,12 +28,21 @@
             android:exported="false"
             android:syncable="true" />
 
-        <activity android:name=".TaskActivity"></activity>
-        <activity android:name=".GoalActivity"></activity>
+        <activity android:name=".TaskActivity" />
+        <activity android:name=".GoalActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.blogspot.sttony.project8.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
