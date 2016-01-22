@@ -21,7 +21,7 @@ public class Exporter2Sheet {
         CSVWriter writer = new CSVWriter(wr);
         String[] header =  new String[]
                 {
-                        "ID",
+                        "TASK_ID",
                         "GOAL_ID",
                         "DUE_DATE",
                         "IS_COMPLETE",
@@ -52,14 +52,13 @@ public class Exporter2Sheet {
             entries[9] = dateFormatter.format(new Date(cr.getLong(9))); // COMPLETE_DATE
             writer.writeNext(entries);
         }
-        writer.close();
     }
 
     public void exportGoalToSheet(Context context, Writer wr)  throws IOException {
         CSVWriter writer = new CSVWriter(wr);
         String[] header =  new String[]
                 {
-                        "ID",
+                        "GOAL_ID",
                         "TITLE",
                         "DURATION",
                         "QUANTITY",
@@ -82,6 +81,5 @@ public class Exporter2Sheet {
             entries[5] = dateFormatter.format(new Date(cr.getLong(5))); // START_DATE
             writer.writeNext(entries);
         }
-        writer.close();
     }
 }
