@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditTextPreference
-        android:title="How many days are your looking forward?"
-        android:key="forward_days"
-        android:defaultValue="30"
-        android:inputType="numberDecimal"
-        android:singleLine="true" />
+    <!--<EditTextPreference-->
+        <!--android:title="How many days are your looking forward?"-->
+        <!--android:key="@string/days_forward_key"-->
+        <!--android:defaultValue="@string/days_forward_default_value"-->
+        <!--android:inputType="numberDecimal"-->
+        <!--android:singleLine="true" />-->
 
     <Preference
         android:title="Export to GDrive"

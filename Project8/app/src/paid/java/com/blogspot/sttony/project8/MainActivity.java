@@ -1,7 +1,10 @@
 package com.blogspot.sttony.project8;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getString(R.string.Goals)
         };
 
-        mMAdapter = new MainActivitySectionsPagerAdapter(getSupportFragmentManager(),titles);
+        mMAdapter = new MainActivitySectionsPagerAdapter(getSupportFragmentManager(),titles, this);
         mViewPager = (ViewPager) findViewById(R.id.mainpager);
         mViewPager.setAdapter(mMAdapter);
 
@@ -104,10 +107,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static class MainActivitySectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public MainActivitySectionsPagerAdapter(FragmentManager fm, String[] _titles) {
+        private Context mContext;
+        public MainActivitySectionsPagerAdapter(FragmentManager fm, String[] _titles, Context _context) {
             super(fm);
             Assert.assertTrue(_titles.length == 3);
             mTitles = _titles;
+            mContext = _context;
         }
 
         private String[] mTitles = null;
@@ -129,16 +134,9 @@ public class MainActivity extends AppCompatActivity {
                     return fragment;
                 }
                 case 1: {
-                    // week
+                    long offset = 30l* 24*3600*1000;
                     Calendar c = Calendar.getInstance();
-                    c.set(c.get(Calendar.YEAR),
-                            c.get(Calendar.MONTH),
-                            c.get(Calendar.DAY_OF_MONTH) + 7 - c.get(Calendar.DAY_OF_WEEK),
-                            23,
-                            59,
-                            59
-                    );
-                    TasksFragment fragment = TasksFragment.newInstance(c.getTime().getTime(), -1);
+                    TasksFragment fragment = TasksFragment.newInstance(c.getTime().getTime() + offset, -1);
                     return fragment;
                 }
 

@@ -137,16 +137,9 @@ public class MainActivity extends AppCompatActivity {
                     return fragment;
                 }
                 case 1: {
-                    // week
+                    long offset = 30l* 24*3600*1000;
                     Calendar c = Calendar.getInstance();
-                    c.set(c.get(Calendar.YEAR),
-                            c.get(Calendar.MONTH),
-                            c.get(Calendar.DAY_OF_MONTH) + 7 - c.get(Calendar.DAY_OF_WEEK),
-                            23,
-                            59,
-                            59
-                    );
-                    TasksFragment fragment = TasksFragment.newInstance(c.getTime().getTime(), -1);
+                    TasksFragment fragment = TasksFragment.newInstance(c.getTime().getTime() + offset, -1);
                     return fragment;
                 }
 
