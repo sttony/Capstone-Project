@@ -27,5 +27,11 @@
 
     <string name="days_forward_key">export</string>
     <string name="days_forward_default_value">30</string>
+    <string name="view_field_due_date">Due Date</string>
+    <string name="view_field_priority">Priority</string>
+    <string name="view_field_reminder">Reminder</string>
+    <string name="view_field_comment">Comment</string>
+    <string name="view_field_discard">Discard</string>
+    <string name="view_field_save">Save</string>
 
 </resources>

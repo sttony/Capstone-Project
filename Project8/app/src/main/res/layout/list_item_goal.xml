@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:editable="false"
-            android:text="Name"
             android:id="@+id/view_field_item_goal_title">
         </TextView>
 
@@ -26,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:editable="false"
-            android:text="15/30"
             android:id="@+id/view_field_item_goal_progress_text"
             android:layout_alignParentEnd="true">
         </TextView>
