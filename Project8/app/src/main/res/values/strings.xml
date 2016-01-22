@@ -35,4 +35,7 @@
     <string name="view_field_save">Save</string>
     <string name="view_button_add">Add</string>
 
+    <string name="appwidget_text">No task!</string>
+    <string name="add_widget">Add widget</string>
+
 </resources>
