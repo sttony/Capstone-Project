@@ -9,7 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.blogspot.sttony.project8.GoalActivity">
+    tools:context="com.blogspot.sttony.project8.GoalActivity"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -150,6 +152,7 @@
         android:id="@+id/view_field_goal_save"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/view_field_save"
         android:src="@android:drawable/ic_menu_save" />
 
 </android.support.design.widget.CoordinatorLayout>

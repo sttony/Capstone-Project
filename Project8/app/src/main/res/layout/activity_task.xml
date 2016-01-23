@@ -8,7 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.blogspot.sttony.project8.TaskActivity">
+    tools:context="com.blogspot.sttony.project8.TaskActivity"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin">
 
     <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -55,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_row="2"
-            android:text="Due Date"
+            android:text="@string/view_field_due_date"
             android:textSize="@dimen/abc_text_size_title_material" />
 
         <EditText
@@ -66,7 +68,7 @@
             android:layout_column="1"
             android:layout_columnSpan="3"
             android:layout_row="2"
-            android:hint="Due Date"
+            android:hint="@string/view_field_due_date"
             android:singleLine="true" />
         <!-- priority  -->
         <TextView
@@ -74,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_row="3"
-            android:text="Priority"
+            android:text="@string/view_field_priority"
             android:textSize="@dimen/abc_text_size_title_material" />
 
         <EditText
@@ -83,7 +85,7 @@
             android:layout_column="1"
             android:layout_row="3"
             android:inputType="number"
-            android:hint="Priority"
+            android:hint="@string/view_field_priority"
             android:id="@+id/view_field_task_priority" />
         <!-- reminder -->
         <CheckBox
@@ -92,7 +94,7 @@
             android:layout_column="2"
             android:layout_row="3"
             android:textSize="@dimen/abc_text_size_title_material"
-            android:hint="Reminder"
+            android:hint="@string/view_field_reminder"
             android:id="@+id/view_field_task_is_reminder" />
 
         <!-- comment -->
@@ -104,8 +106,8 @@
             android:layout_column="0"
             android:layout_columnSpan="4"
             android:layout_row="4"
-            android:hint="Comment"
-            android:gravity="left|top"
+            android:hint="@string/view_field_comment"
+            android:gravity="start|top"
             android:inputType="textMultiLine"
             android:background="@drawable/black_border"
             android:id="@+id/view_field_comment"
@@ -128,7 +130,7 @@
             android:layout_column="0"
             android:layout_columnSpan="2"
             android:layout_row="5"
-            android:text="Discard"
+            android:text="@string/view_field_discard"
             android:onClick="discardTask" />
 
         <Button
@@ -137,7 +139,7 @@
             android:layout_column="2"
             android:layout_columnSpan="2"
             android:layout_row="5"
-            android:text="Save"
+            android:text="@string/view_field_save"
             android:onClick="saveTask"/>
     </LinearLayout>
 </RelativeLayout>

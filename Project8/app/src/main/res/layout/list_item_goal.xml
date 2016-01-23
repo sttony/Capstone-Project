@@ -10,12 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp">
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:editable="false"
-            android:text="Name"
             android:id="@+id/view_field_item_goal_title">
         </TextView>
 
@@ -24,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:editable="false"
-            android:text="15/30"
-            android:id="@+id/view_field_item_goal_progress_text">
+            android:id="@+id/view_field_item_goal_progress_text"
+            android:layout_alignParentEnd="true">
         </TextView>
     </RelativeLayout>
 
@@ -42,6 +43,8 @@
         android:layout_marginTop="0dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp" />
 
 </LinearLayout>
