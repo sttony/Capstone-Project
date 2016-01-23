@@ -1,6 +1,7 @@
 package com.blogspot.sttony.project8;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,61 +14,26 @@ import com.blogspot.sttony.project8.data.TodoContract;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
 public class WidgetFactory implements RemoteViewsService.RemoteViewsFactory {
-    private Cursor mCursor;
     private Context mContext;
     private int mWidgetId;
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+    private List<ContentValues> mTasks;
 
-    public WidgetFactory(Context _context, Intent _intent)
+    public WidgetFactory(Context _context, Intent _intent, List<ContentValues> _array)
     {
-        CursorLoader cl;
-        Calendar c = Calendar.getInstance();
-        c.set(c.get(Calendar.YEAR),
-                c.get(Calendar.MONTH),
-                c.get(Calendar.DAY_OF_MONTH),
-                0,
-                0,
-                0
-        );
-        long todayStart = c.getTime().getTime();
-        c.set(
-                c.get(Calendar.YEAR),
-                c.get(Calendar.MONTH),
-                c.get(Calendar.DAY_OF_MONTH),
-                23,
-                59,
-                59
-        );
-        long todayEnd = c.getTime().getTime();
-        c = Calendar.getInstance();
-        c.set(c.get(Calendar.YEAR),
-                c.get(Calendar.MONTH),
-                c.get(Calendar.DAY_OF_MONTH),
-                23,
-                59,
-                59
-        );
-
         mContext = _context;
-        mCursor = mContext.getContentResolver()
-                .query(TodoContract.TaskEntry.buildTaskWithRange(c.getTime().getTime()),
-                        null,
-                        TodoContract.TaskEntry.COLUMN_DUE_DATE + " <= ? AND (" +
-                                TodoContract.TaskEntry.COLUMN_IS_COMPLETE + " =0 OR (" +
-                                TodoContract.TaskEntry.COLUMN_COMPLETE_DATE + " >= ? AND " +
-                                TodoContract.TaskEntry.COLUMN_COMPLETE_DATE + " <= ? )) " ,
-                        new String[] {Long.toString(c.getTime().getTime()), Long.toString(todayStart),Long.toString(todayEnd)},
-                        TodoContract.TaskEntry.COLUMN_DUE_DATE + " ASC");
         mWidgetId = _intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-            AppWidgetManager.INVALID_APPWIDGET_ID);
+                AppWidgetManager.INVALID_APPWIDGET_ID);
+        mTasks = _array;
     }
     @Override
     public void onCreate() {
-        android.os.Debug.waitForDebugger();
+
     }
 
     @Override
@@ -77,26 +43,24 @@ public class WidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onDestroy() {
-        mCursor.close();
+
+
     }
 
     @Override
     public int getCount() {
-        return mCursor.getCount();
+        return mTasks.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        mCursor.moveToPosition(position);
-        RemoteViews rview= new RemoteViews(mContext.getPackageName(), R.layout.list_item_task);
+        ContentValues item = mTasks.get(position);
+        RemoteViews rview= new RemoteViews(mContext.getPackageName(), R.layout.list_item_task_widget);
 
-        rview.setTextViewText(R.id.view_task_item_title, mCursor.getString(TasksFragment.COL_TASK_TITLE));
-        rview.setTextColor(R.id.view_task_item_title,0x000000);
-
-        long duedate = mCursor.getLong(TasksFragment.COL_TASK_DUE_DATE);
+        rview.setTextViewText(R.id.view_task_item_title, item.getAsString(TodoContract.TaskEntry.COLUMN_TITLE));
+        long duedate = item.getAsLong(TodoContract.TaskEntry.COLUMN_DUE_DATE);
         String duedateStr = simpleDateFormat.format(new Date(duedate));
         rview.setTextViewText(R.id.view_task_item_due_date, duedateStr);
-        rview.setTextColor(R.id.view_task_item_due_date, 0x000000);
 
         return rview;
     }
@@ -108,7 +72,7 @@ public class WidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override

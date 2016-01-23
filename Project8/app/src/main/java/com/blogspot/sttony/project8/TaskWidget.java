@@ -26,7 +26,7 @@ public class TaskWidget extends AppWidgetProvider {
         Intent svcIntent = new Intent(context, WidgetService.class);
         svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         svcIntent.setData(Uri.parse(svcIntent.toUri(Intent.URI_INTENT_SCHEME)));
-        views.setRemoteAdapter(appWidgetId, svcIntent);
+        views.setRemoteAdapter(appWidgetId,R.id.listViewWidget, svcIntent);
         views.setEmptyView(R.id.listViewWidget,android.R.id.empty);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
